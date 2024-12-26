@@ -13,56 +13,84 @@ app.use(express.json());
 // Set the port, fallback to 8081 if not specified in the environment
 const PORT = process.env.PORT || 8081;
 
-// Hospital-Themed HTML Response for Health Check
+// Hospital-Themed HTML Response with Background Images, Vibrant Colors, and Modern Look
 const hospitalHTML = `
   <html>
     <head>
       <title>HealthCare 360</title>
       <style>
         body {
-          font-family: Arial, sans-serif;
-          background-color: #f0f8ff;
-          color: #333;
+          font-family: 'Arial', sans-serif;
+          margin: 0;
+          padding: 0;
+          background-image: url('https://via.placeholder.com/1500x800.png?text=Hospital+Background');
+          background-size: cover;
+          background-position: center;
+          color: #fff;
           text-align: center;
-          padding: 50px;
         }
         h1 {
-          color: #2e8b57;
+          color: #ffffff;
+          font-size: 3em;
+          margin-top: 100px;
         }
         .message {
-          font-size: 20px;
-          color: #4682b4;
+          font-size: 1.5em;
+          margin-top: 20px;
+          color: #ffffff;
         }
         .emoji {
-          font-size: 40px;
+          font-size: 60px;
+          margin-top: 20px;
         }
         .button {
-          margin-top: 30px;
-          padding: 15px 30px;
-          background-color: #2e8b57;
+          margin-top: 40px;
+          padding: 20px 40px;
+          background-color: #008CBA;
           color: white;
           border: none;
-          border-radius: 5px;
-          font-size: 18px;
+          border-radius: 50px;
+          font-size: 20px;
           cursor: pointer;
+          transition: background-color 0.3s ease;
         }
         .button:hover {
-          background-color: #3cb371;
+          background-color: #005f6a;
+        }
+        .card {
+          background-color: rgba(0, 0, 0, 0.6);
+          padding: 30px;
+          margin: 50px auto;
+          width: 80%;
+          border-radius: 15px;
         }
         img {
           margin-top: 20px;
-          width: 300px;
+          width: 350px;
           border-radius: 10px;
+        }
+        footer {
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+          background-color: rgba(0, 0, 0, 0.8);
+          padding: 10px;
+          color: white;
         }
       </style>
     </head>
     <body>
-      <h1>Welcome to HealthCare 360! 💉💊</h1>
-      <div class="message">Your Health is Our Priority!</div>
-      <div class="emoji">🏥</div>
-      <div class="message">Everything is functioning well! You are safe with us.</div>
-      <img src="https://via.placeholder.com/300.png?text=Your+Health+Matters" alt="Hospital Image" />
-      <button class="button" onclick="alert('Stay Safe!')">Take Care</button>
+      <div class="card">
+        <h1>Welcome to HealthCare 360! 💉💊</h1>
+        <div class="message">Your Health is Our Priority!</div>
+        <div class="emoji">🏥</div>
+        <div class="message">Everything is functioning well! You are safe with us.</div>
+        <img src="https://via.placeholder.com/350x200.png?text=Your+Health+Matters" alt="Hospital Image" />
+        <button class="button" onclick="alert('Stay Safe!')">Take Care</button>
+      </div>
+      <footer>
+        <div>&copy; 2024 HealthCare 360. All rights reserved.</div>
+      </footer>
     </body>
   </html>
 `;
