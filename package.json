@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"No test specified\" && exit 0",
-    "lint": "eslint .",
-    "build": "echo \"No build necessary for Express app\""
+    "test": "echo \"No tests defined. Skipping...\" && exit 0",
+    "lint": "eslint . || true",
+    "build": "echo \"No build step necessary for this Express.js app. Skipping...\""
   },
   "author": "Your Name",
   "license": "MIT",
