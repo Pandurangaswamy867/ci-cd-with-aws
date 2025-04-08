@@ -12,7 +12,14 @@ phases:
     commands:
       - echo "Running pre-build steps..."
       - npm run lint || echo "Lint errors detected, continuing build"
-      - npm test || echo "Tests failed, continuing build"
+      - |
+        echo "Starting test execution timer..."
+        START_TIME=$(date +%s)
+        npm test || echo "Tests failed, continuing build"
+        END_TIME=$(date +%s)
+        TEST_DURATION=$((END_TIME - START_TIME))
+        echo "Test Duration (seconds): $TEST_DURATION"
+        echo "CODEBUILD_TEST_DURATION=$TEST_DURATION" >> /tmp/test-metrics.properties
 
   build:
     commands:
@@ -23,9 +30,11 @@ phases:
     commands:
       - echo "Build completed on `date`"
       - echo "Preparing artifact..."
+      - echo "Uploading test duration metrics to CloudWatch Logs..."
+      - echo "HealthCare360-Test-Duration: $TEST_DURATION seconds"
 
 artifacts:
   files:
     - '**/*'
+    - '/tmp/test-metrics.properties'
   discard-paths: no
-
