@@ -14,6 +14,11 @@ app.use(express.urlencoded({ extended: true }));
 // Set the port, fallback to 8081 if not specified in the environment
 const PORT = process.env.PORT || 8081;
 
+// Health check endpoint for testing
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 // Hospital-Themed HTML Response with Additional Features
 const hospitalHTML = `
   <html>
@@ -161,7 +166,11 @@ app.use((req, res) => {
   `);
 });
 
-// Start the server and log the success message with an emoji
-app.listen(PORT, () => {
-  console.log(`🚑 The server is running on port ${PORT} 🚑`);
-});
+// Export the app for testing, and start server only if not in test mode
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`🚑 The server is running on port ${PORT} 🚑`);
+  });
+}
+
+export default app;
