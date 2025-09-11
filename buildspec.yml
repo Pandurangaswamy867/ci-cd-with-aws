@@ -13,12 +13,13 @@ phases:
       - echo "Running pre-build steps..."
       - npm run lint || echo "Lint errors detected, continuing build"
       - echo "Starting test execution timer..."
-      - START_TIME=$(date +%s)
-      - npm test || echo "Tests failed, continuing build"
-      - END_TIME=$(date +%s)
-      - TEST_DURATION=$((END_TIME - START_TIME))
-      - echo "Test Duration (seconds): $TEST_DURATION"
-      - echo "CODEBUILD_TEST_DURATION=$TEST_DURATION" >> /tmp/test-metrics.properties
+      - |
+        START_TIME=$(date +%s)
+        npm test || echo "Tests failed, continuing build"
+        END_TIME=$(date +%s)
+        TEST_DURATION=$((END_TIME - START_TIME))
+        echo "Test Duration (seconds): $TEST_DURATION"
+        echo "CODEBUILD_TEST_DURATION=$TEST_DURATION" >> /tmp/test-metrics.properties
 
   build:
     commands:
@@ -30,11 +31,15 @@ phases:
       - echo "Build completed on `date`"
       - echo "Preparing artifact..."
       - echo "Uploading test duration metrics to CloudWatch Logs..."
-      - echo "HealthCare360-Test-Duration: $TEST_DURATION seconds"
+      - cat /tmp/test-metrics.properties || echo "No test metrics found"
+      - echo "Uploading artifacts to S3 bucket: bubu867pandu"
+      - aws s3 cp artifact.zip s3://bubu867pandu/ --region us-east-1 || echo "S3 upload failed"
+      - echo "Post-build steps completed"
 
 artifacts:
   files:
     - '**/*'
     - '/tmp/test-metrics.properties'
   discard-paths: no
-
+  base-directory: .
+  name: artifact.zip
