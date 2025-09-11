@@ -1,111 +1,185 @@
 import express from 'express';
 import dotenv from 'dotenv';
 
-// Load environment variables
 dotenv.config();
-
-// Initialize the express app
 const app = express();
 
-// Middleware to parse incoming JSON requests
 app.use(express.json());
 
-// Set the port, fallback to 8081 if not specified in the environment
 const PORT = process.env.PORT || 8081;
 
-// Hospital-Themed HTML Response with Background Images, Vibrant Colors, and Modern Look
+// Updated Hospital-Themed HTML
 const hospitalHTML = `
   <html>
     <head>
       <title>HealthCare 360</title>
       <style>
         body {
-          font-family: 'Arial', sans-serif;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
           margin: 0;
           padding: 0;
-          background-image: url('https://via.placeholder.com/1500x800.png?text=Hospital+Background');
+          background-image: url('https://via.placeholder.com/1600x900.png?text=Hospital+Background');
           background-size: cover;
           background-position: center;
           color: #fff;
           text-align: center;
         }
+        .overlay {
+          background: rgba(0,0,0,0.6);
+          min-height: 100vh;
+          padding-bottom: 60px;
+        }
+        nav {
+          background-color: rgba(0, 0, 0, 0.8);
+          padding: 15px;
+          position: sticky;
+          top: 0;
+          z-index: 100;
+        }
+        nav a {
+          color: #fff;
+          margin: 0 15px;
+          text-decoration: none;
+          font-size: 18px;
+          transition: color 0.3s ease;
+        }
+        nav a:hover {
+          color: #00e5ff;
+        }
         h1 {
-          color: #ffffff;
-          font-size: 3em;
-          margin-top: 100px;
+          color: #00e5ff;
+          font-size: 3.2em;
+          margin-top: 60px;
         }
         .message {
-          font-size: 1.5em;
-          margin-top: 20px;
-          color: #ffffff;
+          font-size: 1.4em;
+          margin-top: 15px;
+          color: #fff;
         }
         .emoji {
           font-size: 60px;
           margin-top: 20px;
         }
         .button {
-          margin-top: 40px;
-          padding: 20px 40px;
-          background-color: #008CBA;
+          margin-top: 30px;
+          padding: 15px 35px;
+          background: linear-gradient(45deg, #008CBA, #00e5ff);
           color: white;
           border: none;
           border-radius: 50px;
           font-size: 20px;
           cursor: pointer;
-          transition: background-color 0.3s ease;
+          transition: transform 0.3s ease;
         }
         .button:hover {
-          background-color: #005f6a;
+          transform: scale(1.05);
         }
-        .card {
-          background-color: rgba(0, 0, 0, 0.6);
-          padding: 30px;
+        .services {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 20px;
           margin: 50px auto;
           width: 80%;
-          border-radius: 15px;
         }
-        img {
-          margin-top: 20px;
-          width: 350px;
+        .card {
+          background-color: rgba(255, 255, 255, 0.1);
+          padding: 25px;
+          border-radius: 15px;
+          transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .card:hover {
+          transform: translateY(-8px);
+          background-color: rgba(255, 255, 255, 0.2);
+        }
+        .card img {
+          width: 100%;
           border-radius: 10px;
+          margin-bottom: 15px;
         }
         footer {
           position: fixed;
           bottom: 0;
           width: 100%;
-          background-color: rgba(0, 0, 0, 0.8);
-          padding: 10px;
+          background-color: rgba(0, 0, 0, 0.85);
+          padding: 15px;
           color: white;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .socials a {
+          color: white;
+          margin: 0 10px;
+          font-size: 20px;
+          text-decoration: none;
+          transition: color 0.3s ease;
+        }
+        .socials a:hover {
+          color: #00e5ff;
         }
       </style>
     </head>
     <body>
-      <div class="card">
-        <h1>Welcome to HealthCare 360! 💉💊</h1>
-        <div class="message">Your Health is Our Priority!</div>
-        <div class="emoji">🏥</div>
-        <div class="message">Everything is functioning well! You are safe with us.</div>
-        <img src="https://via.placeholder.com/350x200.png?text=Your+Health+Matters" alt="Hospital Image" />
-        <button class="button" onclick="alert('Stay Safe!')">Take Care</button>
+      <div class="overlay">
+        <nav>
+          <a href="/">Home</a>
+          <a href="#services">Services</a>
+          <a href="#doctors">Doctors</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        
+        <h1>Welcome to HealthCare 360! 🏥</h1>
+        <div class="message">Your Health is Our Priority 💉💊</div>
+        <div class="emoji">❤️</div>
+        <button class="button" onclick="alert('Stay Safe & Healthy!')">Take Care</button>
+        
+        <!-- Services Section -->
+        <section id="services" class="services">
+          <div class="card">
+            <img src="https://via.placeholder.com/300x180.png?text=24/7+Emergency" alt="Emergency">
+            <h2>24/7 Emergency</h2>
+            <p>Immediate medical assistance whenever you need it.</p>
+          </div>
+          <div class="card">
+            <img src="https://via.placeholder.com/300x180.png?text=Specialist+Doctors" alt="Doctors">
+            <h2>Expert Doctors</h2>
+            <p>Our team of specialists ensures top-quality care.</p>
+          </div>
+          <div class="card">
+            <img src="https://via.placeholder.com/300x180.png?text=Advanced+Labs" alt="Labs">
+            <h2>Advanced Labs</h2>
+            <p>State-of-the-art facilities for accurate diagnostics.</p>
+          </div>
+          <div class="card">
+            <img src="https://via.placeholder.com/300x180.png?text=Pharmacy" alt="Pharmacy">
+            <h2>Pharmacy</h2>
+            <p>On-site pharmacy for quick and reliable medicines.</p>
+          </div>
+        </section>
       </div>
+
+      <!-- Footer -->
       <footer>
         <div>&copy; 2024 HealthCare 360. All rights reserved.</div>
+        <div class="socials">
+          <a href="#">🌐</a>
+          <a href="#">📘</a>
+          <a href="#">🐦</a>
+          <a href="#">📷</a>
+        </div>
       </footer>
     </body>
   </html>
 `;
 
-// Health check route to verify server is running smoothly
 app.get('/health', (req, res) => {
   res.status(200).send(hospitalHTML);
 });
 
-// Main route for the app's homepage
 app.get('/', (req, res) => {
   res.status(200).send(hospitalHTML);
 });
 
-// Start the server and log the success message with an emoji
 app.listen(PORT, () => {
   console.log(`🚑 The server is running on port ${PORT} 🚑`);
 });
