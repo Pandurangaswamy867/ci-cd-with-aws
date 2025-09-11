@@ -32,6 +32,8 @@ phases:
       - echo "Preparing artifact..."
       - echo "Uploading test duration metrics to CloudWatch Logs..."
       - cat /tmp/test-metrics.properties || echo "No test metrics found"
+      - echo "Zipping build artifacts..."
+      - zip -r artifact.zip . > /dev/null
       - echo "Uploading artifacts to S3 bucket: bubu867pandu"
       - aws s3 cp artifact.zip s3://bubu867pandu/ --region us-east-1 || echo "S3 upload failed"
       - echo "Post-build steps completed"
@@ -41,5 +43,3 @@ artifacts:
     - '**/*'
     - '/tmp/test-metrics.properties'
   discard-paths: no
-  base-directory: .
-  name: artifact.zip
